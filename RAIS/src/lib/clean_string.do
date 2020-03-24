@@ -28,7 +28,9 @@ program clean_string
 		qui replace `1' = usubinstr(`1', "`c'", "u", .)
 	}
 	*
-	
+
+	qui replace `1' = subinstr(`1', "æ","e", .)
+	qui replace `1' = subinstr(`1', "ƒ","f", .)
 	qui replace `1' = usubinstr(`1', "ç", "c", .)
 	qui replace `1' = usubinstr(`1', "ñ", "n", .)
 	
@@ -52,7 +54,8 @@ program clean_string
 		qui replace `1' = usubinstr(`1', "`C'", "U", .)
 	}
 	*
-	
+	qui replace `1' = subinstr(`1', "Ý","Y", .)
+	qui replace `1' = subinstr(`1', "ÿ","Y", .)
 	qui replace `1' = usubinstr(`1', "Ç", "C", .)
 	qui replace `1' = usubinstr(`1', "Ñ", "N", .)
 	
@@ -70,7 +73,8 @@ program clean_string
 	qui replace `1' = subinstr(`1', "}", "", .)
 	qui replace `1' = subinstr(`1', "'", "", .)
 	qui replace `1' = subinstr(`1', "`", "", .)
-	
+	qui replace `1' = subinstr(`1', "`=char(194)'"," ", .)
+	qui replace `1' = subinstr(`1', "`=char(160)'"," ", .)
 	//-------------------//
 	// spacing
 	//-------------------//
