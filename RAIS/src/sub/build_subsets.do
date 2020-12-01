@@ -552,15 +552,30 @@ foreach year of numlist 1985(1)2018 {
 	drop if _merge == 2
 	drop _merge
 	
-	gen wage_avg = remmedia * minimum_wage_nom		// using minimum wage data to inpute missing values for year<=1998
-	la var wage_avg "Monthly Wage (R$)"				// generates some noise from original remmedr variable
-	
-	gen wage_dec = remdezembro * minimum_wage_nom	// using minimum wage data to inpute missing values for year<=1998
-	la var wage_dec "December Wage (R$)"			// generates some noise from original remmedr variable
-	
-	gen wage_total = n_months * wage_avg
-	la var wage_total "Total Yearly Wage (R$)"
-	
+	if `year' <= 1998 {
+		gen wage_avg = remmedia * minimum_wage_nom		// using minimum wage data to inpute missing values for year<=1998
+		la var wage_avg "Monthly Wage (R$)"				// generates some noise from original remmedr variable
+
+		gen wage_dec = remdezembro * minimum_wage_nom	// using minimum wage data to inpute missing values for year<=1998
+		la var wage_dec "December Wage (R$)"			// generates some noise from original remmedr variable
+
+		gen wage_total = n_months * wage_avg
+		la var wage_total "Total Yearly Wage (R$)"
+
+	}
+			
+	if `year' > 1998 {
+		gen wage_avg = remmedr						
+		la var wage_avg "Monthly Wage (R$)"			
+
+		gen wage_dec = remdezr							
+		la var wage_dec "December Wage (R$)"			
+
+		gen wage_total = n_months * wage_avg
+		la var wage_total "Total Yearly Wage (R$)"
+
+	}			
+
 	if `year' >= 1994 {
 		
 		gen wage_avg_def = wage_avg / price_index_b2018
